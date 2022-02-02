@@ -2,8 +2,8 @@ package banco.modelo;
 
 public class Cliente {
 	
-	public String nome, cidade, estado;
-	static int quantidade;
+	protected String nome, cidade, estado;
+	private static int quantidade;
 	public int codigo;
 	
 	public Cliente() {
