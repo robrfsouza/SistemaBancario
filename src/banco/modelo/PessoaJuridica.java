@@ -39,6 +39,6 @@ public class PessoaJuridica extends Cliente {
 	}
 
 	public String listarDados() {
-		return "Razao Social: "+razaoSocial+"\n"+" CNPJ "+cnpj+"\n"+super.listarDados();
+		return "Razao Social: "+razaoSocial+"\n"+"CNPJ "+cnpj+"\n"+super.listarDados();
 	}
 }

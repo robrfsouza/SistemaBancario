@@ -27,5 +27,17 @@ public class Conta {
 			return false;
 		}
 	}
+	
+	public String listarDados() {
+		String nome;
+		if(cliente instanceof PessoaFisica) {
+			nome=((PessoaFisica)cliente).getNome();
+			
+		}else
+			nome=((PessoaJuridica)cliente).getRazaoSocial();
+		return "NUMERO: "+numero+"\n"+
+					"CORRENTISTA "+ nome+"\n"+
+					"SALDO: "+ DecimalFormat.getCurrencyInstance().format(saldo);
+	}
 
 }

@@ -4,7 +4,7 @@ public class Cliente {
 
 	protected String cidade, estado;
 	private static int quantidade;
-	public int codigo;
+	protected int codigo;
 
 	public Cliente() {
 		quantidade++;

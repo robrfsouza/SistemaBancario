@@ -4,55 +4,62 @@ import javax.swing.JOptionPane;
 
 import banco.modelo.Cliente;
 import banco.modelo.Conta;
-
+import banco.modelo.PessoaFisica;
+import banco.modelo.PessoaJuridica;
 
 public class Principal {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		Conta conta= new Conta();
-		Cliente cliente1 = new Cliente("Robson", "Sao Paulo", "SP");
-		Cliente cliente2 = new Cliente ("Daniel", "Iraja", "RJ");
-		Cliente cliente3 = new Cliente ("Hinata", "Ilha do Governador", "Rio de Janeiro");
-		
-		JOptionPane.showMessageDialog(null, cliente1.listarDados());
-		JOptionPane.showMessageDialog(null, cliente2.listarDados());
-		JOptionPane.showMessageDialog(null, cliente3.listarDados());
-		
-		JOptionPane.showMessageDialog(null, "Possuimos "+ Cliente.qtdCliente() + " cliente(s) Cadastrados");
-		
-		int opcao =0;
+
+		Conta conta = new Conta();
+		Cliente cliente = new Cliente();
+		String tipoCliente = JOptionPane.showInputDialog(null,
+				"Escolha o tipo de cliente:\n" + "F - Pessoa Fisica\n J- Pessoa Juridica");
+
+		if (tipoCliente.equals("F")) {
+			cliente = new PessoaFisica();
+			((PessoaFisica) cliente).setNome(JOptionPane.showInputDialog(null, "Nome do cliente:"));
+			((PessoaFisica) cliente).setCpf(JOptionPane.showInputDialog(null, "CPF:"));
+		} else if (tipoCliente.equals("J")) {
+			cliente = new PessoaJuridica();
+			((PessoaJuridica) cliente).setRazaoSocial(JOptionPane.showInputDialog(null, "Razao Social:"));
+			((PessoaJuridica) cliente).setCnpj(JOptionPane.showInputDialog(null, "CNPJ"));
+		} else {
+			JOptionPane.showMessageDialog(null, "Opcao invalida, saindo do sistema");
+			return;
+		}
+
+		cliente.setCidade(JOptionPane.showInputDialog(null, "Cidade"));
+		cliente.setEstado(JOptionPane.showInputDialog(null, "Estado:"));
+
+		JOptionPane.showMessageDialog(null, cliente.listarDados());
+
+		int opcao = 0;
 		String ret;
-		
+
 		do {
-			String mensagem = "Saldo em Conta: " + conta.getSaldoFormatado() + "\n\n"+
-					"Opcoes:\n1	- Depositar \n2 - Sacar \n3 - Sair";
+			String mensagem = "SALDO EM CONTA" + conta.getSaldoFormatado() + "\n\n"
+					+ "OPCOES\n1 - Depositar\n2 - Sacar\n3 - Sair";
 			try {
-				opcao = Integer.parseInt(JOptionPane.showInputDialog(null, mensagem));
-				
+				opcao = Integer.parseInt(JOptionPane.showInputDialog(null,mensagem));
 				switch (opcao) {
 				case 1:
-					ret = JOptionPane.showInputDialog(null, "Valor do depósito:");
+					ret = JOptionPane.showInputDialog(null, "Valor do depósito");
 					conta.depositar(Double.parseDouble(ret));
-					JOptionPane.showMessageDialog(null, "Deposito conluido");
 					break;
 				case 2:
-					ret = JOptionPane.showInputDialog(null, "Valor do saque:");
+					ret = JOptionPane.showInputDialog(null, "Valor do saque");
 					if (conta.sacar(Double.parseDouble(ret))) {
-						JOptionPane.showMessageDialog(null, "Saque concluido");
-					}
-					else {
-						JOptionPane.showConfirmDialog(null, "Operacao nao realizada");
-					}
-					
-				
+						JOptionPane.showMessageDialog(null, "Saque realizado");
+					} else
+						JOptionPane.showMessageDialog(null, "Operacao nao concluida");
+					break;
 				}
-			}catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(null, "VALOR INVALIDO");
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, e);
 			}
-					
-		}while ((opcao==1)||(opcao==2));
-	}
+		}while ((opcao == 1) || (opcao == 2));
 
+	}
 }
